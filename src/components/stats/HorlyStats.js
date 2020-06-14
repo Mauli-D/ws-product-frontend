@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 
 
 const HourlyStats = () => {
@@ -10,6 +10,63 @@ const HourlyStats = () => {
   const impressions = hourlyStats.map(hourly => hourly.impressions);
   const clicks = hourlyStats.map(hourly => hourly.clicks);
   const revenue = hourlyStats.map(hourly => hourly.revenue);
+  const impressionchart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for impressions/day',
+      backgroundColor: '#71B37C',
+      borderColor: '#71B37C',
+      borderWidth: 1,
+      hoverBackgroundColor: '#71B37C',
+      hoverBorderColor: '#71B37C',
+      data: impressions
+      }
+    ]
+  };
+  const clickchart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for clicks/day',
+      backgroundColor: '#FF0000',
+      borderColor: '#FF0000',
+      borderWidth: 1,
+      hoverBackgroundColor: '#FF0000',
+      hoverBorderColor: '#FF0000',
+      data: clicks
+      }
+    ]
+  };
+  const revenuechart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for revenue/day',
+      backgroundColor: '#EC932F',
+      borderColor: '#EC932F',
+      borderWidth: 1,
+      hoverBackgroundColor: '#EC932F',
+      hoverBorderColor: '#EC932F',
+      data: revenue
+      }
+    ]
+  };
+  // const revenuechart ={
+  //   labels: date,
+  //   datasets: [
+  //     {
+  //     label: 'Graph for revenue/day',
+  //     backgroundColor: '#EC932F',
+  //     borderColor: '#EC932F',
+  //     borderWidth: 1,
+  //     hoverBackgroundColor: '#EC932F',
+  //     hoverBorderColor: '#EC932F',
+  //     data: revenue
+  //     }
+  //   ]
+  // };
+
   const data = {
     datasets: [{
       label: 'Revenue',
@@ -143,6 +200,13 @@ const HourlyStats = () => {
     <section id="hourlystats" className="container pt-5">
       {" "}
       <h1 className="text-center">HourlyStats</h1>
+      <div>
+        <h4 className="text-center">Chart of Hourly Stats</h4>
+        <Line data={data} options={options} />
+        <Bar data={revenuechart} />
+        <Bar data={impressionchart} />
+        <Bar data={clickchart} />
+      </div>
       <div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
@@ -170,10 +234,6 @@ const HourlyStats = () => {
           )
         })}
       </table>
-      <div>
-        <h4 className="text-center">Chart of Hourly Stats</h4>
-        <Line data={data} options={options} />
-      </div>
     </section>
   );
 };

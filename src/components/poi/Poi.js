@@ -120,6 +120,10 @@ const Poi = () => {
     <section id="poiview" className="container pt-5">
       {" "}
       <h1 className="text-center">Poi</h1>
+      <div>
+        <h4 className="text-center">Chart of Poi</h4>
+        {/* <Line data={data} options={options} /> */}
+      </div>
       <div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
@@ -145,10 +149,6 @@ const Poi = () => {
           )
         })}
       </table>
-      <div>
-        <h4 className="text-center">Chart of Poi</h4>
-        <Line data={data} options={options} />
-      </div>
     </section>
   );
 };

@@ -9,8 +9,61 @@ const DailyStats = () => {
   const impressions = dailyStats.map(daily => daily.impressions);
   const clicks = dailyStats.map(daily => daily.clicks);
   const revenue = dailyStats.map(daily => daily.revenue);
+  const impressionchart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for impressions/day',
+      backgroundColor: '#71B37C',
+      borderColor: '#71B37C',
+      borderWidth: 1,
+      hoverBackgroundColor: '#71B37C',
+      hoverBorderColor: '#71B37C',
+      data: impressions
+      }
+    ]
+  };
+  const revenuechart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for revenue/day',
+      backgroundColor: '#EC932F',
+      borderColor: '#EC932F',
+      borderWidth: 1,
+      hoverBackgroundColor: '#EC932F',
+      hoverBorderColor: '#EC932F',
+      data: revenue
+      }
+    ]
+  };
+  const clickchart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for clicks/day',
+      backgroundColor: '#FF0000',
+      borderColor: '#FF0000',
+      borderWidth: 1,
+      hoverBackgroundColor: '#FF0000',
+      hoverBorderColor: '#FF0000',
+      data: clicks
+      }
+    ]
+  };
+  
   const data = {
     datasets: [{
+      label: 'Impressions',
+      type: 'bar',
+      data: impressions,
+      fill: false,
+      backgroundColor: '#71B37C',
+      borderColor: '#71B37C',
+      hoverBackgroundColor: '#71B37C',
+      hoverBorderColor: '#71B37C',
+      yAxisID: 'y-axis-1'
+    },{
       label: 'Revenue',
       type:'bar',
       data: revenue,
@@ -22,16 +75,6 @@ const DailyStats = () => {
       pointHoverBackgroundColor: '#EC932F',
       pointHoverBorderColor: '#EC932F',
       yAxisID: 'y-axis-2'
-    },{
-      label: 'Impressions',
-      type: 'bar',
-      data: impressions,
-      fill: false,
-      backgroundColor: '#71B37C',
-      borderColor: '#71B37C',
-      hoverBackgroundColor: '#71B37C',
-      hoverBorderColor: '#71B37C',
-      yAxisID: 'y-axis-1'
     },{
       label: 'Clicks',
       type: 'bar',
@@ -121,6 +164,13 @@ const DailyStats = () => {
     <section id="dailystats" className="container pt-5">
       {" "}
       <h1 className="text-center">DailyStats</h1>
+      <div>
+        <h4 className="text-center">Chart of Daily Stats</h4>
+        <Bar data={data} options={options} />
+        <Bar data={impressionchart} />
+        <Bar data={revenuechart} />
+        <Bar data={clickchart} />
+      </div>
       <div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
@@ -146,10 +196,6 @@ const DailyStats = () => {
           )
         })}
       </table>
-      <div>
-        <h4 className="text-center">Chart of Daily Stats</h4>
-        <Bar data={data} options={options} />
-      </div>
     </section>
   );
 };

@@ -1,5 +1,5 @@
 import React, {useEffect, useState } from 'react';
-import { Line } from 'react-chartjs-2';
+import { Bar, Line } from 'react-chartjs-2';
 
 
 const HourlyEvents = () => {
@@ -7,7 +7,39 @@ const HourlyEvents = () => {
 
   const events = hourlyEvents.map(hourlyEvent => hourlyEvent.events);
   const date = hourlyEvents.map(hourlyEvent => hourlyEvent.date);
+  console.log(date);
+  // let date = date.toLocalDate();
   const hour = hourlyEvents.map(hourlyEvent => hourlyEvent.hour);
+
+  const hourchart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for Hourly Events',
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+      hoverBorderColor: 'rgba(255,99,132,1)',
+      data: hour
+      }
+    ]
+  };
+
+  const eventchart ={
+    labels: date,
+    datasets: [
+      {
+      label: 'Graph for Hourly Events',
+      backgroundColor: 'rgba(255,99,132,0.2)',
+      borderColor: 'rgba(255,99,132,1)',
+      borderWidth: 1,
+      hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+      hoverBorderColor: 'rgba(255,99,132,1)',
+      data: events
+      }
+    ]
+  };
   const data = {
     datasets: [{
       label: 'hours',
@@ -98,6 +130,13 @@ const HourlyEvents = () => {
     <section id="hourlyevents"className="container pt-5">
       {" "}
       <h1 className="text-center">HourlyEvents</h1>
+      <div>
+          <h4 className="text-center">Chart of Hourly Events</h4>
+          <Line data={data} options={options} />
+          <Bar data={hourchart} />
+          <Bar data={eventchart} />
+
+        </div>
       <div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
@@ -121,10 +160,6 @@ const HourlyEvents = () => {
           )
         })}
         </table>
-        <div>
-          <h4 className="text-center">Chart of Hourly Events</h4>
-          <Line data={data} options={options} />
-        </div>
     </section>
   );
 };

@@ -35,6 +35,11 @@ const DailyEvents = () => {
 		<section id="dailyevents" className="container pt-5">
 			{" "}
 			<h1 className="text-center">DailyEvents</h1>
+			<div>
+				<h4 className="text-center">Chart of Daily Events</h4>
+				<Line data={data} />
+				<Bar data={data} />
+			</div>
 			<div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
@@ -56,11 +61,6 @@ const DailyEvents = () => {
 					)
 				})}
 			</table>
-			<div>
-				<h4 className="text-center">Chart of Daily Events</h4>
-				<Line data={data} />
-				<Bar data={data} />
-			</div>
 		</section>
 	);
 };
