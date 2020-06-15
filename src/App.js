@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import './App.css';
-
+import Home from './components/pages/home'
 import Nav from './components/navbar/navbar';
 import Poi from './components/poi/Poi';
 import DailyStats from './components/stats/DailyStats';
@@ -14,6 +14,9 @@ export default function App() {
     <Router>
       <Nav />
       <Switch>
+        <Route path="/">
+        <Home />
+        </Route>
         <Route path="/dailyevents">
           <DailyEvents />
         </Route>
@@ -32,6 +35,7 @@ export default function App() {
       </Switch>
     </Router>
   );
+  
 }
 
 

@@ -1,6 +1,41 @@
 import React, {useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
+import {withStyles, makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
+const useStyles = makeStyles({
+	root: {
+	  width: '100%',
+	},
+	container: {
+	  maxHeight: 440,
+	},
+});
 
 const DailyStats = () => {
   const [dailyStats, setDailystats] = useState([]);
@@ -160,11 +195,24 @@ const DailyStats = () => {
       getDailystats();
   }, []);
 
+  const classes = useStyles();
+	const [page, setPage] = React.useState(0);
+	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
+	const handleChangePage = (event, newPage) => {
+	  setPage(newPage);
+	};
+  
+	const handleChangeRowsPerPage = (event) => {
+	  setRowsPerPage(+event.target.value);
+	  setPage(0);
+  };
+  
   return (
     <section id="dailystats" className="container pt-5">
       {" "}
       <h1 className="text-center">DailyStats</h1>
-      <div>
+      <div className="mb-3">
         <h4 className="text-center">Chart of Daily Stats</h4>
         <Bar data={data} options={options} />
         <Bar data={impressionchart} />
@@ -174,28 +222,39 @@ const DailyStats = () => {
       <div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
-      <table className="table">
-        <thead className="thead-dark">
-          <tr>
-            <th>Date</th>
-            <th>Impressions</th>
-            <th>Clicks</th>
-            <th>Revenue</th>
-          </tr>
-        </thead>
-        {dailyStats.map(function(daily, i) {
-          return (
-            <tbody key={i}>
-              <tr>
-                <td>{daily.date}</td>
-                <td>{daily.impressions}</td>
-                <td>{daily.clicks}</td>
-                <td>{daily.revenue}</td>
-              </tr>
-            </tbody>
-          )
-        })}
-      </table>
+      <Paper className={classes.root}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Date</StyledTableCell>
+                <StyledTableCell align="center">Impressions</StyledTableCell>
+                <StyledTableCell align="center">Clicks</StyledTableCell>
+                <StyledTableCell align="right">Revenue</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {dailyStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((daily) => (
+                <StyledTableRow key={daily.date}>
+                  <StyledTableCell component="th" scope="row">{daily.date}</StyledTableCell>
+                  <StyledTableCell align="center">{daily.impressions}</StyledTableCell>
+                  <StyledTableCell align="center">{daily.clicks}</StyledTableCell>
+                  <StyledTableCell align="right">{daily.revenue}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        {/* <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={dailyStats.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        /> */}
+      </Paper>
     </section>
   );
 };

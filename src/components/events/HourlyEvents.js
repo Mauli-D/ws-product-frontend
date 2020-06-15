@@ -1,14 +1,48 @@
 import React, {useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import { withStyles, makeStyles } from '@material-ui/core/styles';
+import Paper from '@material-ui/core/Paper';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TablePagination from '@material-ui/core/TablePagination';
+import TableRow from '@material-ui/core/TableRow';
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    '&:nth-of-type(odd)': {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
+const useStyles = makeStyles({
+	root: {
+	  width: '100%',
+	},
+	container: {
+	  maxHeight: 440,
+	},
+});
 
 const HourlyEvents = () => {
   const [hourlyEvents, setHourlyevents] = useState([]);
 
   const events = hourlyEvents.map(hourlyEvent => hourlyEvent.events);
   const date = hourlyEvents.map(hourlyEvent => hourlyEvent.date);
-  console.log(date);
-  // let date = date.toLocalDate();
+  // console.log(date);
   const hour = hourlyEvents.map(hourlyEvent => hourlyEvent.hour);
 
   const hourchart ={
@@ -126,40 +160,63 @@ const HourlyEvents = () => {
     getHourlyevents();
   }, []);
 
+  const classes = useStyles();
+	const [page, setPage] = React.useState(0);
+	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  
+	const handleChangePage = (event, newPage) => {
+	  setPage(newPage);
+	};
+  
+	const handleChangeRowsPerPage = (event) => {
+	  setRowsPerPage(+event.target.value);
+	  setPage(0);
+	};
+
   return (
     <section id="hourlyevents"className="container pt-5">
       {" "}
       <h1 className="text-center">HourlyEvents</h1>
-      <div>
+      <div className="mb-3">
           <h4 className="text-center">Chart of Hourly Events</h4>
           <Line data={data} options={options} />
           <Bar data={hourchart} />
           <Bar data={eventchart} />
-
         </div>
       <div className="col-lg-6 active-pink-4 mb-4">
 				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
 			</div>
-      <table className="table">
-        <thead className="thead-dark">
-          <tr>
-            <th>Date</th>
-            <th>Hours</th>
-            <th>Events</th>
-          </tr>
-        </thead>
-        {hourlyEvents.map(function(hourlyEvent, i) {
-          return (
-            <tbody key={i}>
-              <tr>
-                <td>{hourlyEvent.date}</td>
-                <td>{hourlyEvent.hour}</td>
-                <td>{hourlyEvent.events}</td>
-              </tr>
-            </tbody>
-          )
-        })}
-        </table>
+      <Paper className={classes.root}>
+        <TableContainer component={Paper}>
+          <Table className={classes.table} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <StyledTableCell>Date</StyledTableCell>
+                <StyledTableCell align="center">Hours</StyledTableCell>
+                <StyledTableCell align="right">Events</StyledTableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {hourlyEvents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((hourlyEvent) => (
+                <StyledTableRow>
+                  <StyledTableCell component="th" scope="row">{hourlyEvent.date}</StyledTableCell>
+                  <StyledTableCell align="center">{hourlyEvent.hour}</StyledTableCell>
+                  <StyledTableCell align="right">{hourlyEvent.events}</StyledTableCell>
+                </StyledTableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[10, 25, 100]}
+          component="div"
+          count={hourlyEvents.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onChangePage={handleChangePage}
+          onChangeRowsPerPage={handleChangeRowsPerPage}
+        />
+      </Paper>
     </section>
   );
 };
