@@ -14,9 +14,9 @@ export default function App() {
     <Router>
       <Nav />
       <Switch>
-        <Route path="/">
-        <Home />
-        </Route>
+        {/* <Route path="/">
+        {/* <Home /> */}
+        {/* </Route> */}
         <Route path="/dailyevents">
           <DailyEvents />
         </Route>
