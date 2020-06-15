@@ -176,7 +176,7 @@ const HourlyEvents = () => {
   return (
     <section id="hourlyevents"className="container pt-5">
       {" "}
-      <h1 className="text-center">HourlyEvents</h1>
+      <h1 className="text-center pt-3">HourlyEvents</h1>
       <div className="mb-3">
           <h4 className="text-center">Chart of Hourly Events</h4>
           <Line data={data} options={options} />

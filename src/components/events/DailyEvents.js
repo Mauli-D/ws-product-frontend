@@ -83,7 +83,7 @@ const DailyEvents = () => {
 	return (
 		<section id="dailyevents" className="container pt-5">
 			{" "}
-			<h1 className="text-center">DailyEvents</h1>
+			<h1 className="text-center pt-3">DailyEvents</h1>
 			<div className="mb-3">
 				<h4 className="text-center">Chart of Daily Events</h4>
 				<Line data={data} />

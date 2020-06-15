@@ -68,7 +68,7 @@ const Poi = () => {
   return (
     <section id="poiview" className="container pt-5">
       {" "}
-      <h1 className="text-center">Poi</h1>
+      <h1 className="text-center pt-3">Poi</h1>
       <div className="mb-3">
         <h4 className="text-center">Chart of Poi</h4>
           <MapChart setTooltipContent={setContent} />
