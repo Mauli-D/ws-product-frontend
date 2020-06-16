@@ -1,49 +1,52 @@
 import React, {useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
-import {withStyles, makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
-
-const StyledTableCell = withStyles((theme) => ({
-  head: {
-    backgroundColor: theme.palette.common.black,
-    color: theme.palette.common.white,
-  },
-  body: {
-    fontSize: 14,
-  },
-}))(TableCell);
-
-const StyledTableRow = withStyles((theme) => ({
-  root: {
-    '&:nth-of-type(odd)': {
-      backgroundColor: theme.palette.action.hover,
-    },
-  },
-}))(TableRow);
-
-const useStyles = makeStyles({
-	root: {
-	  width: '100%',
-	},
-	container: {
-	  maxHeight: 440,
-	},
-});
+import moment from 'moment'
+import { MDBDataTable } from 'mdbreact';
 
 const DailyStats = () => {
   const [dailyStats, setDailystats] = useState([]);
 
-  const date = dailyStats.map(daily => daily.date);
+  const date = dailyStats.map(daily => moment(daily.date).format('DD-MM-YYYY'));
   const impressions = dailyStats.map(daily => daily.impressions);
   const clicks = dailyStats.map(daily => daily.clicks);
   const revenue = dailyStats.map(daily => daily.revenue);
+
+  const data = {
+		columns: [
+      {
+				label: 'Date',
+				field: 'date',
+				sort: 'asc',
+				width: 150
+			},
+      {
+				label: 'Impressions',
+				field: 'impressions',
+				sort: 'asc',
+				width: 270
+      },
+      {
+				label: 'Clicks',
+				field: 'clicks',
+				sort: 'asc',
+				width: 150
+      },
+      {
+				label: 'Revenue',
+				field: 'revenue',
+				sort: 'asc',
+				width: 150
+			},
+		],
+		rows: [...dailyStats.map((daily, i) => (
+			{
+				date: <p key={i}>{moment(daily.date).format('DD-MM-YYYY')}</p>,
+        revenue: <p>{new Intl.NumberFormat("en-ca").format(daily.revenue)}</p>,
+        impressions: <p>{daily.impressions}</p>,
+        clicks: <p>{daily.clicks}</p>
+			}
+		))]
+	}
   const impressionchart ={
     labels: date,
     datasets: [
@@ -87,7 +90,7 @@ const DailyStats = () => {
     ]
   };
   
-  const data = {
+  const statschart = {
     datasets: [{
       label: 'Impressions',
       type: 'bar',
@@ -194,19 +197,6 @@ const DailyStats = () => {
   useEffect(() => {
       getDailystats();
   }, []);
-
-  const classes = useStyles();
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
-	const handleChangePage = (event, newPage) => {
-	  setPage(newPage);
-	};
-  
-	const handleChangeRowsPerPage = (event) => {
-	  setRowsPerPage(+event.target.value);
-	  setPage(0);
-  };
   
   return (
     <section id="dailystats" className="container pt-5">
@@ -214,47 +204,17 @@ const DailyStats = () => {
       <h1 className="text-center pt-3">DailyStats</h1>
       <div className="mb-3">
         <h4 className="text-center">Chart of Daily Stats</h4>
-        <Bar data={data} options={options} />
+        <Bar data={statschart} options={options} />
         <Bar data={impressionchart} />
         <Bar data={revenuechart} />
         <Bar data={clickchart} />
       </div>
-      <div className="col-lg-6 active-pink-4 mb-4">
-				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
-			</div>
-      <Paper className={classes.root}>
-        <TableContainer component={Paper}>
-          <Table className={classes.table} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <StyledTableCell>Date</StyledTableCell>
-                <StyledTableCell align="center">Impressions</StyledTableCell>
-                <StyledTableCell align="center">Clicks</StyledTableCell>
-                <StyledTableCell align="right">Revenue</StyledTableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {dailyStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((daily) => (
-                <StyledTableRow key={daily.date}>
-                  <StyledTableCell component="th" scope="row">{daily.date}</StyledTableCell>
-                  <StyledTableCell align="center">{daily.impressions}</StyledTableCell>
-                  <StyledTableCell align="center">{daily.clicks}</StyledTableCell>
-                  <StyledTableCell align="right">{daily.revenue}</StyledTableCell>
-                </StyledTableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-        {/* <TablePagination
-          rowsPerPageOptions={[10, 25, 100]}
-          component="div"
-          count={dailyStats.length}
-          rowsPerPage={rowsPerPage}
-          page={page}
-          onChangePage={handleChangePage}
-          onChangeRowsPerPage={handleChangeRowsPerPage}
-        /> */}
-      </Paper>
+      <MDBDataTable
+				striped
+				bordered
+				small
+				data={data}
+			/>
     </section>
   );
 };

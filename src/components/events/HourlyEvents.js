@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import moment from 'moment'
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -14,6 +15,8 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontSize:16,
+    fontWeight: "bold"
   },
   body: {
     fontSize: 14,
@@ -41,7 +44,7 @@ const HourlyEvents = () => {
   const [hourlyEvents, setHourlyevents] = useState([]);
 
   const events = hourlyEvents.map(hourlyEvent => hourlyEvent.events);
-  const date = hourlyEvents.map(hourlyEvent => hourlyEvent.date);
+  const date = hourlyEvents.map(hourlyEvent => moment(hourlyEvent.date).format('DD-MM-YYYY'));
   // console.log(date);
   const hour = hourlyEvents.map(hourlyEvent => hourlyEvent.hour);
 
@@ -197,9 +200,9 @@ const HourlyEvents = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {hourlyEvents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((hourlyEvent) => (
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">{hourlyEvent.date}</StyledTableCell>
+              {hourlyEvents.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((hourlyEvent, i) => (
+                <StyledTableRow key={i}>
+                  <StyledTableCell component="th" scope="row">{moment(hourlyEvent.date).format('DD-MM-YYYY')}</StyledTableCell>
                   <StyledTableCell align="center">{hourlyEvent.hour}</StyledTableCell>
                   <StyledTableCell align="right">{hourlyEvent.events}</StyledTableCell>
                 </StyledTableRow>

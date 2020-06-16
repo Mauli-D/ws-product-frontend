@@ -1,5 +1,6 @@
 import React, {useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
+import moment from 'moment';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
@@ -14,6 +15,8 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
+    fontSize:16,
+    fontWeight: "bold"
   },
   body: {
     fontSize: 14,
@@ -40,7 +43,7 @@ const useStyles = makeStyles({
 const HourlyStats = () => {
   const [hourlyStats, setHourlystats] = useState([]);
 
-  const date = hourlyStats.map(hourly => hourly.date);
+  const date = hourlyStats.map(hourly => moment(hourly.date).format('DD-MM-YYYY'));
   const hours = hourlyStats.map(hourly => hourly.hour);
   const impressions = hourlyStats.map(hourly => hourly.impressions);
   const clicks = hourlyStats.map(hourly => hourly.clicks);
@@ -272,13 +275,13 @@ const HourlyStats = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {hourlyStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((hourly) => (
-                <StyledTableRow>
-                  <StyledTableCell component="th" scope="row">{hourly.date}</StyledTableCell>
+              {hourlyStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((hourly, i) => (
+                <StyledTableRow key ={i}>
+                  <StyledTableCell component="th" scope="row">{moment(hourly.date).format('DD-MM-YYYY')}</StyledTableCell>
                   <StyledTableCell align="center">{hourly.hour}</StyledTableCell>
                   <StyledTableCell align="center">{hourly.impressions}</StyledTableCell>
                   <StyledTableCell align="center">{hourly.clicks}</StyledTableCell>
-                  <StyledTableCell align="right">{hourly.revenue}</StyledTableCell>
+                  <StyledTableCell align="right">{new Intl.NumberFormat("en-ca").format(hourly.revenue)}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>
