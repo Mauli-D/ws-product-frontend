@@ -40,10 +40,10 @@ const DailyStats = () => {
 		],
 		rows: [...dailyStats.map((daily, i) => (
 			{
-				date: <p key={i}>{moment(daily.date).format('DD-MM-YYYY')}</p>,
-        revenue: <p>{new Intl.NumberFormat("en-ca").format(daily.revenue)}</p>,
-        impressions: <p>{daily.impressions}</p>,
-        clicks: <p>{daily.clicks}</p>
+				date: daily.date,
+        revenue: new Intl.NumberFormat("en-ca").format(daily.revenue),
+        impressions: daily.impressions,
+        clicks: daily.clicks
 			}
 		))]
 	}
@@ -191,7 +191,13 @@ const DailyStats = () => {
   const getDailystats = async () => {
     const response = await fetch("https://ws-product.herokuapp.com/stats/daily");
     const jsonData = await response.json();
-    setDailystats(jsonData);
+    const sanitizedValue = jsonData.map((daily) => ({
+      revenue: String(daily.revenue),
+      impressions: String(daily.impressions),
+      clicks: String(daily.clicks),
+      date: moment(daily.date).format("DD-MM-YYYY"),
+    }));
+    setDailystats(sanitizedValue);
   }
   
   useEffect(() => {

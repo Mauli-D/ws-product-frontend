@@ -1,14 +1,12 @@
 import React, {useEffect, useState } from 'react';
 import {Bar, Line} from 'react-chartjs-2';
 import moment from 'moment'
-import { MDBDataTable, MDBContainer } from 'mdbreact';
-// import FuzzyHighlighter, { Highlighter } from 'react-fuzzy-highlighter';
+import { MDBDataTable } from 'mdbreact';
 
 const DailyEvents = () => {
 	const [dailyEvents, setDailyevents] = useState([]);
 	const events = dailyEvents.map(dailyEvent => dailyEvent.events);
 	const date = dailyEvents.map(dailyEvent => moment(dailyEvent.date).format('DD-MM-YYYY'));	
-	
 	const data = {
 		columns: [
 			{
@@ -26,8 +24,8 @@ const DailyEvents = () => {
 		],
 		rows: [...dailyEvents.map((dailyEvent, i) => (
 			{
-				date: <MDBContainer>{moment(dailyEvent.date).format('DD-MM-YYYY')}</MDBContainer>,
-				events: <MDBContainer>{dailyEvent.events}</MDBContainer>,
+				date: dailyEvent.date,
+				events: dailyEvent.events,
 			}
 		))]
 	}
@@ -49,7 +47,11 @@ const DailyEvents = () => {
 	const getDailyevents = async () => {
 		const response = await fetch("https://ws-product.herokuapp.com/events/daily");
 		const jsonData = await response.json();
-		setDailyevents(jsonData);
+		const sanitizedValue = jsonData.map((dailyEvent) => ({
+      events: String(dailyEvent.events),
+      date: moment(dailyEvent.date).format("DD-MM-YYYY"),
+    }));
+		setDailyevents(sanitizedValue);
 	}
 
 	useEffect(() => {

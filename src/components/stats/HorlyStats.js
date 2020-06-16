@@ -11,6 +11,8 @@ import TableHead from '@material-ui/core/TableHead';
 import TablePagination from '@material-ui/core/TablePagination';
 import TableRow from '@material-ui/core/TableRow';
 
+import filterByFields from "../filter-by-fields";
+
 const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
@@ -37,7 +39,11 @@ const useStyles = makeStyles({
 	},
 	container: {
 	  maxHeight: 440,
-	},
+  },
+  highlight: {
+    height: 16,
+    backgroundColor: "yellow",
+  },
 });
 
 const HourlyStats = () => {
@@ -227,7 +233,14 @@ const HourlyStats = () => {
   const getHourlystats = async () => {
     const response = await fetch("https://ws-product.herokuapp.com/stats/hourly");
     const jsonData = await response.json();
-    setHourlystats(jsonData);
+    const sanitizedValue = jsonData.map((hourly) => ({
+      clicks: String(hourly.clicks),
+      impressions: String(hourly.impressions),
+      revenue: String(hourly.revenue),
+      hour: String(hourly.hour),
+      date: moment(hourly.date).format("DD-MM-YYYY"),
+    }));
+    setHourlystats(sanitizedValue);
   }
 
   useEffect(() => {
@@ -238,6 +251,8 @@ const HourlyStats = () => {
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
   
+  const [search, setSearch] = useState("");
+
 	const handleChangePage = (event, newPage) => {
 	  setPage(newPage);
 	};
@@ -259,7 +274,14 @@ const HourlyStats = () => {
         <Bar data={clickchart} />
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
-				<input className="form-control" type="text" placeholder="Search" aria-label="Search" />
+      <input
+          className="form-control"
+          type="text"
+          placeholder="Search"
+          value={search}
+          aria-label="Search"
+          onChange={(e) => setSearch(e.target.value)}
+        />
 			</div>
       
       <Paper className={classes.root}>
@@ -275,13 +297,39 @@ const HourlyStats = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {hourlyStats.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((hourly, i) => (
-                <StyledTableRow key ={i}>
-                  <StyledTableCell component="th" scope="row">{moment(hourly.date).format('DD-MM-YYYY')}</StyledTableCell>
-                  <StyledTableCell align="center">{hourly.hour}</StyledTableCell>
-                  <StyledTableCell align="center">{hourly.impressions}</StyledTableCell>
-                  <StyledTableCell align="center">{hourly.clicks}</StyledTableCell>
-                  <StyledTableCell align="right">{new Intl.NumberFormat("en-ca").format(hourly.revenue)}</StyledTableCell>
+            {filterByFields(hourlyStats, ["date", "hour", "impressions", "clicks", "revenue"], search)
+                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                .map((hourly, i) => (
+                  <StyledTableRow key={i}>
+                    <StyledTableCell
+                      component="th"
+                      scope="row"
+                      className={
+                        search !== "" && hourly.date.includes(search)
+                          ? classes.highlight
+                          : ""
+                      }
+                    >{hourly.date}</StyledTableCell>
+                  <StyledTableCell align="center" className={
+                        search !== "" && hourly.hour.includes(search)
+                          ? classes.highlight
+                          : ""
+                      }>{hourly.hour}</StyledTableCell>
+                  <StyledTableCell align="center" className={
+                        search !== "" && hourly.impressions.includes(search)
+                          ? classes.highlight
+                          : ""
+                      }>{hourly.impressions}</StyledTableCell>
+                  <StyledTableCell align="center" className={
+                        search !== "" && hourly.clicks.includes(search)
+                          ? classes.highlight
+                          : ""
+                      }>{hourly.clicks}</StyledTableCell>
+                  <StyledTableCell align="right" className={
+                        search !== "" && hourly.revenue.includes(search)
+                          ? classes.highlight
+                          : ""
+                      }>{new Intl.NumberFormat("en-ca").format(hourly.revenue)}</StyledTableCell>
                 </StyledTableRow>
               ))}
             </TableBody>

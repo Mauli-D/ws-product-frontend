@@ -10,11 +10,11 @@ const mapStyles = {
   const Poi = (props) => {
     const [pois, setPoi] = useState([]);
   
-    // const ID = pois.map(poi => poi.poi_id);
-    // const name = pois.map(poi => poi.name);
-    // const lat = pois.map(poi => poi.lat);
-    // const lon = pois.map(poi => poi.lon);
-    // const cordinates = pois.map(poi =>[ poi.lat,  poi.lon]);
+    const ID = pois.map(poi => poi.poi_id);
+    const name = pois.map(poi => poi.name);
+    const lat = pois.map(poi => poi.lat);
+    const lon = pois.map(poi => poi.lon);
+    const cordinates = pois.map(poi =>[ poi.lat,  poi.lon]);
     const data = {
       columns: [
         {
@@ -44,10 +44,10 @@ const mapStyles = {
       ],
       rows: [...pois.map((poi, i) => (
         {
-          id: <p key={i}>{poi.poi_id}</p>,
-          name: <p>{poi.name}</p>,
-          lat: <p>{poi.lat}</p>,
-          lon: <p>{poi.lon}</p>
+          id: poi.poi_id,
+          name: poi.name,
+          lat: poi.lat,
+          lon: poi.lon
         }
       ))]
     }
@@ -109,8 +109,8 @@ const mapStyles = {
              zoom={14}
              style={mapStyles}
               initialCenter={{
-                  lat: 42.39,
-                  lng: -72.52
+                  lat: 43.6708,
+                  lng: -79.3899
               }}>
               <Marker onClick={onMarkerClick} name={'current location'} />
               <InfoWindow
