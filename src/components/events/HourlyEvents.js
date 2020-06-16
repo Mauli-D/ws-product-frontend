@@ -53,31 +53,16 @@ const HourlyEvents = () => {
   const date = hourlyEvents.map((hourlyEvent) => hourlyEvent.date);
   const hour = hourlyEvents.map((hourlyEvent) => hourlyEvent.hour);
 
-  const hourchart = {
-    labels: date,
-    datasets: [
-      {
-        label: "Graph for Hourly Events",
-        backgroundColor: "rgba(255,99,132,0.2)",
-        borderColor: "rgba(255,99,132,1)",
-        borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
-        data: hour,
-      },
-    ],
-  };
-
   const eventchart = {
     labels: date,
     datasets: [
       {
         label: "Graph for Hourly Events",
-        backgroundColor: "rgba(255,99,132,0.2)",
-        borderColor: "rgba(255,99,132,1)",
+        backgroundColor: "#71B37C",
+        borderColor: "#71B37C",
         borderWidth: 1,
-        hoverBackgroundColor: "rgba(255,99,132,0.4)",
-        hoverBorderColor: "rgba(255,99,132,1)",
+        hoverBackgroundColor: "#71B37C",
+        hoverBorderColor: "#71B37C",
         data: events,
       },
     ],
@@ -200,7 +185,6 @@ const HourlyEvents = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Hourly Events</h4>
         <Line data={data} options={options} />
-        <Bar data={hourchart} />
         <Bar data={eventchart} />
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
@@ -224,41 +208,22 @@ const HourlyEvents = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {filterByFields(hourlyEvents, ["date", "hour", "event"], search)
+              {filterByFields(hourlyEvents, ["date", "hour", "events"], search)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((hourlyEvent, i) => (
                   <StyledTableRow key={i}>
-                    <StyledTableCell
-                      component="th"
+                    <StyledTableCell component="th"
                       scope="row"
-                      className={
-                        search !== "" && hourlyEvent.date.includes(search)
-                          ? classes.highlight
-                          : ""
-                      }
-                    >
-                      {hourlyEvent.date}
-                    </StyledTableCell>
+                      className={search !== "" && hourlyEvent.date.includes(search) ? classes.highlight : ""}
+                    >{hourlyEvent.date}</StyledTableCell>
                     <StyledTableCell
                       align="center"
-                      // className={
-                      //   search !== "" && hourlyEvent.hour.includes(search)
-                      //     ? classes.highlight
-                      //     : ""
-                      // }
-                    >
-                      {hourlyEvent.hour}
-                    </StyledTableCell>
+                      className={search !== "" && hourlyEvent.hour.includes(search) ? classes.highlight : ""}
+                    >{hourlyEvent.hour}</StyledTableCell>
                     <StyledTableCell
                       align="right"
-                      // className={
-                      //   search !== "" && hourlyEvent.events.includes(search)
-                      //     ? classes.highlight
-                      //     : ""
-                      // }
-                    >
-                      {hourlyEvent.events}
-                    </StyledTableCell>
+                      className={search !== "" && hourlyEvent.events.includes(search) ? classes.highlight : ""}
+                    >{hourlyEvent.events}</StyledTableCell>
                   </StyledTableRow>
                 ))}
             </TableBody>

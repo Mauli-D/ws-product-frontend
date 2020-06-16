@@ -48,8 +48,7 @@ const useStyles = makeStyles({
 
 const HourlyStats = () => {
   const [hourlyStats, setHourlystats] = useState([]);
-
-  const date = hourlyStats.map(hourly => moment(hourly.date).format('DD-MM-YYYY'));
+  const date = hourlyStats.map(hourly => hourly.date);
   const hours = hourlyStats.map(hourly => hourly.hour);
   const impressions = hourlyStats.map(hourly => hourly.impressions);
   const clicks = hourlyStats.map(hourly => hourly.clicks);
@@ -96,20 +95,6 @@ const HourlyStats = () => {
       }
     ]
   };
-  // const revenuechart ={
-  //   labels: date,
-  //   datasets: [
-  //     {
-  //     label: 'Graph for revenue/day',
-  //     backgroundColor: '#EC932F',
-  //     borderColor: '#EC932F',
-  //     borderWidth: 1,
-  //     hoverBackgroundColor: '#EC932F',
-  //     hoverBorderColor: '#EC932F',
-  //     data: revenue
-  //     }
-  //   ]
-  // };
 
   const data = {
     datasets: [{
