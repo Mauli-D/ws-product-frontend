@@ -4,7 +4,7 @@ Live: https://ws-product-frontend.netlify.app/
 
 Clone down this repository. You will need `node` and `npm` installed globally on your machine.
 
-set up .env.local file with your API_KEY = YOUR_GOOGLE_API_KEY <br />
+set up `.env.local` file with your API_KEY = YOUR_GOOGLE_API_KEY <br />
 
 Installation:
 `npm install`
