@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 });
 
 const mapStyles = {
-  width: "90%",
+  width: "85%",
   height: "70%",
 };
 
@@ -103,7 +103,7 @@ const Poi = (props) => {
           onChange={(e) => setSearch(e.target.value)}
         />
 			</div>
-      
+      <div className="mb-3">
       <Paper className={classes.root}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -143,6 +143,7 @@ const Poi = (props) => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
+      </div>
       <Map
         google={props.google}
         zoom={14}
