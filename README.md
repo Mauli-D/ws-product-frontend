@@ -1,6 +1,7 @@
 This project was created by Maulika Desai  
 
 to see map correctly you have to set your .env file with your API_KEY = YOUR_GOOGLE_API_KEY
+Live: https://ws-product-frontend.netlify.app/
 
 ## Available Scripts
 In the project directory, you can run:
