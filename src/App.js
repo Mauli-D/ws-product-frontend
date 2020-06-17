@@ -3,7 +3,7 @@ import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
 import './App.css';
 import $ from 'jquery'
 import Home from './components/pages/home'
-import Nav from './components/navbar/navbar';
+import Nav from './components/pages/navbar';
 import Poi from './components/poi/Poi';
 import DailyStats from './components/stats/DailyStats';
 import HourlyStats from './components/stats/HorlyStats';

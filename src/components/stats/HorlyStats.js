@@ -215,20 +215,19 @@ const HourlyStats = () => {
     }
   };
 
-  const getHourlystats = async () => {
-    const response = await fetch("https://ws-product.herokuapp.com/stats/hourly");
-    const jsonData = await response.json();
-    const sanitizedValue = jsonData.map((hourly) => ({
-      clicks: String(hourly.clicks),
-      impressions: String(hourly.impressions),
-      revenue: String(hourly.revenue),
-      hour: String(hourly.hour),
-      date: moment(hourly.date).format("DD-MM-YYYY"),
-    }));
-    setHourlystats(sanitizedValue);
-  }
-
   useEffect(() => {
+    const getHourlystats = async () => {
+      const response = await fetch("https://ws-product.herokuapp.com/stats/hourly");
+      const jsonData = await response.json();
+      const sanitizedValue = jsonData.map((hourly) => ({
+        clicks: String(hourly.clicks),
+        impressions: String(hourly.impressions),
+        revenue: String(hourly.revenue),
+        hour: String(hourly.hour),
+        date: moment(hourly.date).format("DD-MM-YYYY"),
+      }));
+      setHourlystats(sanitizedValue);
+    }
       getHourlystats();
   }, []);
 
@@ -254,9 +253,13 @@ const HourlyStats = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Hourly Stats</h4>
         <Line data={data} options={options} />
+        <hr/>
         <Bar data={revenuechart} />
+        <hr/>
         <Bar data={impressionchart} />
+        <hr/>
         <Bar data={clickchart} />
+        <hr/>
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
       <input
@@ -323,7 +326,7 @@ const HourlyStats = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={hourlyStats.length}
+          count={filterByFields(hourlyStats, ["date", "hour", "impressions", "clicks", "revenue"], search).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

@@ -194,19 +194,18 @@ const DailyStats = () => {
     }
   };
 
-  const getDailystats = async () => {
-    const response = await fetch("https://ws-product.herokuapp.com/stats/daily");
-    const jsonData = await response.json();
-    const sanitizedValue = jsonData.map((daily) => ({
-      revenue: String(daily.revenue),
-      impressions: String(daily.impressions),
-      clicks: String(daily.clicks),
-      date: moment(daily.date).format("DD-MM-YYYY"),
-    }));
-    setDailystats(sanitizedValue);
-  }
-  
   useEffect(() => {
+    const getDailystats = async () => {
+      const response = await fetch("https://ws-product.herokuapp.com/stats/daily");
+      const jsonData = await response.json();
+      const sanitizedValue = jsonData.map((daily) => ({
+        revenue: String(daily.revenue),
+        impressions: String(daily.impressions),
+        clicks: String(daily.clicks),
+        date: moment(daily.date).format("DD-MM-YYYY"),
+      }));
+      setDailystats(sanitizedValue);
+    }
       getDailystats();
   }, []);
 
@@ -232,9 +231,13 @@ const DailyStats = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Daily Stats</h4>
         <Bar data={statschart} options={options} />
+        <hr/>
         <Bar data={impressionchart} />
+        <hr/>
         <Bar data={revenuechart} />
+        <hr/>
         <Bar data={clickchart} />
+        <hr/>
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
         <input
@@ -279,7 +282,7 @@ const DailyStats = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={dailyStats.length}
+          count={filterByFields(dailyStats, ["date", "impressions", "clicks", "revenue"], search).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

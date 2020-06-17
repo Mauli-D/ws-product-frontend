@@ -65,17 +65,16 @@ const DailyEvents = () => {
 		]
 	};
 
-	const getDailyevents = async () => {
-		const response = await fetch("https://ws-product.herokuapp.com/events/daily");
-		const jsonData = await response.json();
-		const sanitizedValue = jsonData.map((dailyEvent) => ({
-      	events: String(dailyEvent.events),
-      	date: moment(dailyEvent.date).format("DD-MM-YYYY"),
-    }));
-		setDailyevents(sanitizedValue);
-	}
-
 	useEffect(() => {
+    const getDailyevents = async () => {
+      const response = await fetch("https://ws-product.herokuapp.com/events/daily");
+      const jsonData = await response.json();
+      const sanitizedValue = jsonData.map((dailyEvent) => ({
+          events: String(dailyEvent.events),
+          date: moment(dailyEvent.date).format("DD-MM-YYYY"),
+      }));
+      setDailyevents(sanitizedValue);
+    }
 		getDailyevents();
 	}, []);
 
@@ -101,7 +100,9 @@ const DailyEvents = () => {
 			<div className="mb-3">
 				<h4 className="text-center">Chart of Daily Events</h4>
 				<Line data={dailychart} />
+        <hr/>
 				<Bar data={dailychart} />
+        <hr/>
 			</div>
 			<div className="col-lg-6 active-pink-4 mb-4">
         <input
@@ -139,7 +140,7 @@ const DailyEvents = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={dailyEvents.length}
+          count={filterByFields(dailyEvents, ["date", "events"], search).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}

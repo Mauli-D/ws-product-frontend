@@ -114,7 +114,7 @@ const HourlyEvents = () => {
           gridLines: {
             display: false,
           },
-          labels: date,
+          labels: date
         },
       ],
       yAxes: [
@@ -146,20 +146,19 @@ const HourlyEvents = () => {
     },
   };
 
-  const getHourlyevents = async () => {
-    const response = await fetch(
-      "https://ws-product.herokuapp.com/events/hourly"
-    );
-    const jsonData = await response.json();
-    const sanitizedValue = jsonData.map((hourlyEvent) => ({
-      events: String(hourlyEvent.events),
-      hour: String(hourlyEvent.hour),
-      date: moment(hourlyEvent.date).format("DD-MM-YYYY"),
-    }));
-    setHourlyevents(sanitizedValue);
-  };
-
   useEffect(() => {
+    const getHourlyevents = async () => {
+      const response = await fetch(
+        "https://ws-product.herokuapp.com/events/hourly"
+      );
+      const jsonData = await response.json();
+      const sanitizedValue = jsonData.map((hourlyEvent) => ({
+        events: String(hourlyEvent.events),
+        hour: String(hourlyEvent.hour),
+        date: moment(hourlyEvent.date).format("DD-MM-YYYY"),
+      }));
+      setHourlyevents(sanitizedValue);
+    };
     getHourlyevents();
   }, []);
 
@@ -185,7 +184,9 @@ const HourlyEvents = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Hourly Events</h4>
         <Line data={data} options={options} />
-        <Bar data={eventchart} />
+        <hr/>
+        <Bar data={eventchart}/>
+        <hr/>
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
         <input
@@ -232,7 +233,7 @@ const HourlyEvents = () => {
         <TablePagination
           rowsPerPageOptions={[10, 25, 100]}
           component="div"
-          count={hourlyEvents.length}
+          count={filterByFields(hourlyEvents, ["date", "hour", "events"], search).length}
           rowsPerPage={rowsPerPage}
           page={page}
           onChangePage={handleChangePage}
