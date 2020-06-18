@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Fragment} from 'react';
 import { Link } from "react-router-dom";
 
 /***********************
@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const Nav = props => {
   return (
-    <React.Fragment>
+    <Fragment>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark navbar-custom text-uppercase fixed-top" id="mainNav">
         <div className="container">
           <button className="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold rounded ml-auto collapsed" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"> <i className="fas fa-bars"></i></button>
@@ -35,7 +35,7 @@ const Nav = props => {
           </div>
         </div>
       </nav>
-    </React.Fragment>
+    </Fragment>
   );
 };
 
