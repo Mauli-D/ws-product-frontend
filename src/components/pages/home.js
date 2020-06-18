@@ -1,45 +1,25 @@
-import React, {useState, useEffect} from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
 
 const Home = () => {
-
-const [home, setHome] = useState([]);
-const gethome = async () => {
-    const response = await fetch("https://ws-product.herokuapp.com/");
-    const data = await response.text();
-    setHome(data);
-  }
+  const [home, setHome] = useState([]);
 
   useEffect(() => {
-      gethome();
+    const gethome = async () => {
+      const response = await fetch("https://ws-product.herokuapp.com/");
+      const data = await response.text();
+      setHome(data);
+    }
+    gethome();
   }, []);
-  
-  return (
-		<React.Fragment>
 
+  return (
+    <React.Fragment>
       <section className="container pt-5">
-				<div className="pt-5">
-					<h4 className="text-center">{home}</h4>
-					<ul>
-						<li className="nav-item mx-0 mx-lg-1">
-							<Link to="/dailyevents">DailyEvents</Link>
-						</li>
-						<li className="nav-item mx-0 mx-lg-1">
-							<Link to="/hourlyevents">HourlyEvents</Link>
-						</li>
-						<li className="nav-item mx-0 mx-lg-1">
-							<Link to="/dailystats">DailyStats</Link>
-						</li>
-						<li className="nav-item mx-0 mx-lg-1">
-							<Link to="/hourlystats">HourlyStats</Link>
-						</li>
-						<li className="nav-item mx-0 mx-lg-1">
-							<Link to="/poiview">Poi</Link>
-						</li>
-					</ul>
-				</div>
+        <div className="pt-5">
+          <h4 className="text-center">{home}</h4>
+        </div>
       </section>
-			</React.Fragment>
+    </React.Fragment>
   )
 }
 

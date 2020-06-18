@@ -1,5 +1,5 @@
 import React from 'react';
-import {BrowserRouter as Router, Switch, Route} from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import './App.css';
 import $ from 'jquery'
 import Home from './components/pages/home'
@@ -40,17 +40,16 @@ class App extends React.Component {
   }
   componentDidMount() {
 
-    $('#mainNav').find('a').click(function() {
+    $('#mainNav').find('a').click(function () {
       $("a").removeClass("active focus");
       $(this).toggleClass("active");
-   });
-   
-    $('.collapse ul li a').click(function() {
+    });
+
+    $('.collapse ul li a').click(function () {
       /* always close responsive nav after click */
-    $('.navbar-toggler:visible').click();
-  });
+      $('.navbar-toggler:visible').click();
+    });
   }
 }
-
 
 export default App;

@@ -47,64 +47,64 @@ const useStyles = makeStyles({
 });
 
 const DailyEvents = () => {
-	const [dailyEvents, setDailyevents] = useState([]);
-	const events = dailyEvents.map(dailyEvent => dailyEvent.events);
-	const date = dailyEvents.map(dailyEvent => moment(dailyEvent.date).format('DD-MM-YYYY'));	
-	const dailychart ={
-		labels: date,
-		datasets: [
-			{
-			label: 'Graph for Daily Events',
-			backgroundColor: 'rgba(255,99,132,0.2)',
-			borderColor: 'rgba(255,99,132,1)',
-			borderWidth: 1,
-			hoverBackgroundColor: 'rgba(255,99,132,0.4)',
-			hoverBorderColor: 'rgba(255,99,132,1)',
-			data: events
-			}
-		]
-	};
+  const [dailyEvents, setDailyevents] = useState([]);
+  const events = dailyEvents.map(dailyEvent => dailyEvent.events);
+  const date = dailyEvents.map(dailyEvent => dailyEvent.date);
+  const dailychart = {
+    labels: date,
+    datasets: [
+      {
+        label: 'Graph for Daily Events',
+        backgroundColor: 'rgba(255,99,132,0.2)',
+        borderColor: 'rgba(255,99,132,1)',
+        borderWidth: 1,
+        hoverBackgroundColor: 'rgba(255,99,132,0.4)',
+        hoverBorderColor: 'rgba(255,99,132,1)',
+        data: events
+      }
+    ]
+  };
 
-	useEffect(() => {
+  useEffect(() => {
     const getDailyevents = async () => {
       const response = await fetch("https://ws-product.herokuapp.com/events/daily");
       const jsonData = await response.json();
       const sanitizedValue = jsonData.map((dailyEvent) => ({
-          events: String(dailyEvent.events),
-          date: moment(dailyEvent.date).format("DD-MM-YYYY"),
+        events: String(dailyEvent.events),
+        date: moment(dailyEvent.date).format("DD-MM-YYYY"),
       }));
       setDailyevents(sanitizedValue);
     }
-		getDailyevents();
-	}, []);
+    getDailyevents();
+  }, []);
 
-	const classes = useStyles();
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const classes = useStyles();
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
 
-	const [search, setSearch] = useState("");
+  const [search, setSearch] = useState("");
 
-	const handleChangePage = (event, newPage) => {
-		setPage(newPage);
-	};
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
 
-	const handleChangeRowsPerPage = (event) => {
-		setRowsPerPage(+event.target.value);
-		setPage(0);
-	};
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
-	return (
-		<section id="dailyevents" className="container pt-5">
-			{" "}
-			<h1 className="text-center pt-3">DailyEvents</h1>
-			<div className="mb-3">
-				<h4 className="text-center">Chart of Daily Events</h4>
-				<Line data={dailychart} />
-        <hr/>
-				<Bar data={dailychart} />
-        <hr/>
-			</div>
-			<div className="col-lg-6 active-pink-4 mb-4">
+  return (
+    <section id="dailyevents" className="container pt-5">
+      {" "}
+      <h1 className="text-center pt-3">DailyEvents</h1>
+      <div className="mb-3">
+        <h4 className="text-center">Chart of Daily Events</h4>
+        <Line data={dailychart} />
+        <hr />
+        <Bar data={dailychart} />
+        <hr />
+      </div>
+      <div className="col-lg-6 active-pink-4 mb-4">
         <input
           className="form-control"
           type="text"
@@ -128,9 +128,9 @@ const DailyEvents = () => {
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((dailyEvent, i) => (
                   <StyledTableRow key={dailyEvent.date}>
-                    <StyledTableCell component="th" scope="row" className={ search !== "" && dailyEvent.date.includes(search) ? classes.highlight : "" }>
+                    <StyledTableCell component="th" scope="row" className={search !== "" && dailyEvent.date.includes(search) ? classes.highlight : ""}>
                       {dailyEvent.date}</StyledTableCell>
-                    <StyledTableCell align="right" className={ search !== "" && dailyEvent.events.includes(search) ? classes.highlight : "" }>
+                    <StyledTableCell align="right" className={search !== "" && dailyEvent.events.includes(search) ? classes.highlight : ""}>
                       {dailyEvent.events}</StyledTableCell>
                   </StyledTableRow>
                 ))}
@@ -147,8 +147,8 @@ const DailyEvents = () => {
           onChangeRowsPerPage={handleChangeRowsPerPage}
         />
       </Paper>
-		</section>
-	);
+    </section>
+  );
 };
 
 export default DailyEvents;

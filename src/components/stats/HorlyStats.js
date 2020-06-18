@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar, Line } from 'react-chartjs-2';
 import moment from 'moment';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    fontSize:16,
+    fontSize: 16,
     fontWeight: "bold"
   },
   body: {
@@ -34,11 +34,11 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
-	root: {
-	  width: '100%',
-	},
-	container: {
-	  maxHeight: 440,
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 440,
   },
   highlight: {
     height: 16,
@@ -53,45 +53,45 @@ const HourlyStats = () => {
   const impressions = hourlyStats.map(hourly => hourly.impressions);
   const clicks = hourlyStats.map(hourly => hourly.clicks);
   const revenue = hourlyStats.map(hourly => hourly.revenue);
-  const impressionchart ={
+  const impressionchart = {
     labels: date,
     datasets: [
       {
-      label: 'Graph for impressions/day',
-      backgroundColor: '#71B37C',
-      borderColor: '#71B37C',
-      borderWidth: 1,
-      hoverBackgroundColor: '#71B37C',
-      hoverBorderColor: '#71B37C',
-      data: impressions
+        label: 'Graph for impressions/day',
+        backgroundColor: '#71B37C',
+        borderColor: '#71B37C',
+        borderWidth: 1,
+        hoverBackgroundColor: '#71B37C',
+        hoverBorderColor: '#71B37C',
+        data: impressions
       }
     ]
   };
-  const clickchart ={
+  const clickchart = {
     labels: date,
     datasets: [
       {
-      label: 'Graph for clicks/day',
-      backgroundColor: '#FF0000',
-      borderColor: '#FF0000',
-      borderWidth: 1,
-      hoverBackgroundColor: '#FF0000',
-      hoverBorderColor: '#FF0000',
-      data: clicks
+        label: 'Graph for clicks/day',
+        backgroundColor: '#FF0000',
+        borderColor: '#FF0000',
+        borderWidth: 1,
+        hoverBackgroundColor: '#FF0000',
+        hoverBorderColor: '#FF0000',
+        data: clicks
       }
     ]
   };
-  const revenuechart ={
+  const revenuechart = {
     labels: date,
     datasets: [
       {
-      label: 'Graph for revenue/day',
-      backgroundColor: '#EC932F',
-      borderColor: '#EC932F',
-      borderWidth: 1,
-      hoverBackgroundColor: '#EC932F',
-      hoverBorderColor: '#EC932F',
-      data: revenue
+        label: 'Graph for revenue/day',
+        backgroundColor: '#EC932F',
+        borderColor: '#EC932F',
+        borderWidth: 1,
+        hoverBackgroundColor: '#EC932F',
+        hoverBorderColor: '#EC932F',
+        data: revenue
       }
     ]
   };
@@ -99,7 +99,7 @@ const HourlyStats = () => {
   const data = {
     datasets: [{
       label: 'Revenue',
-      type:'line',
+      type: 'line',
       data: revenue,
       fill: false,
       borderColor: '#EC932F',
@@ -109,7 +109,7 @@ const HourlyStats = () => {
       pointHoverBackgroundColor: '#EC932F',
       pointHoverBorderColor: '#EC932F',
       yAxisID: 'y-axis-1'
-    },{
+    }, {
       label: 'Impressions',
       type: 'line',
       data: impressions,
@@ -119,7 +119,7 @@ const HourlyStats = () => {
       hoverBackgroundColor: '#71B37C',
       hoverBorderColor: '#71B37C',
       yAxisID: 'y-axis-2'
-    },{
+    }, {
       label: 'Clicks',
       type: 'line',
       data: clicks,
@@ -129,7 +129,7 @@ const HourlyStats = () => {
       hoverBackgroundColor: '#FF0000',
       hoverBorderColor: '#FF0000',
       yAxisID: 'y-axis-3'
-    },{
+    }, {
       label: 'Hours',
       type: 'line',
       data: hours,
@@ -140,7 +140,8 @@ const HourlyStats = () => {
       hoverBorderColor: '#0000FF',
       yAxisID: 'y-axis-4'
     },
-  ]};
+    ]
+  };
   const options = {
     responsive: true,
     labels: date,
@@ -228,23 +229,23 @@ const HourlyStats = () => {
       }));
       setHourlystats(sanitizedValue);
     }
-      getHourlystats();
+    getHourlystats();
   }, []);
 
   const classes = useStyles();
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
   const [search, setSearch] = useState("");
 
-	const handleChangePage = (event, newPage) => {
-	  setPage(newPage);
-	};
-  
-	const handleChangeRowsPerPage = (event) => {
-	  setRowsPerPage(+event.target.value);
-	  setPage(0);
-	};
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   return (
     <section id="hourlystats" className="container pt-5">
@@ -253,16 +254,16 @@ const HourlyStats = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Hourly Stats</h4>
         <Line data={data} options={options} />
-        <hr/>
+        <hr />
         <Bar data={revenuechart} />
-        <hr/>
+        <hr />
         <Bar data={impressionchart} />
-        <hr/>
+        <hr />
         <Bar data={clickchart} />
-        <hr/>
+        <hr />
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
-      <input
+        <input
           className="form-control"
           type="text"
           placeholder="Search"
@@ -270,8 +271,8 @@ const HourlyStats = () => {
           aria-label="Search"
           onChange={(e) => setSearch(e.target.value)}
         />
-			</div>
-      
+      </div>
+
       <Paper className={classes.root}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -285,7 +286,7 @@ const HourlyStats = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-            {filterByFields(hourlyStats, ["date", "hour", "impressions", "clicks", "revenue"], search)
+              {filterByFields(hourlyStats, ["date", "hour", "impressions", "clicks", "revenue"], search)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((hourly, i) => (
                   <StyledTableRow key={i}>
@@ -298,28 +299,28 @@ const HourlyStats = () => {
                           : ""
                       }
                     >{hourly.date}</StyledTableCell>
-                  <StyledTableCell align="center" className={
-                        search !== "" && hourly.hour.includes(search)
-                          ? classes.highlight
-                          : ""
-                      }>{hourly.hour}</StyledTableCell>
-                  <StyledTableCell align="center" className={
-                        search !== "" && hourly.impressions.includes(search)
-                          ? classes.highlight
-                          : ""
-                      }>{hourly.impressions}</StyledTableCell>
-                  <StyledTableCell align="center" className={
-                        search !== "" && hourly.clicks.includes(search)
-                          ? classes.highlight
-                          : ""
-                      }>{hourly.clicks}</StyledTableCell>
-                  <StyledTableCell align="right" className={
-                        search !== "" && hourly.revenue.includes(search)
-                          ? classes.highlight
-                          : ""
-                      }>{new Intl.NumberFormat("en-ca").format(hourly.revenue)}</StyledTableCell>
-                </StyledTableRow>
-              ))}
+                    <StyledTableCell align="center" className={
+                      search !== "" && hourly.hour.includes(search)
+                        ? classes.highlight
+                        : ""
+                    }>{hourly.hour}</StyledTableCell>
+                    <StyledTableCell align="center" className={
+                      search !== "" && hourly.impressions.includes(search)
+                        ? classes.highlight
+                        : ""
+                    }>{hourly.impressions}</StyledTableCell>
+                    <StyledTableCell align="center" className={
+                      search !== "" && hourly.clicks.includes(search)
+                        ? classes.highlight
+                        : ""
+                    }>{hourly.clicks}</StyledTableCell>
+                    <StyledTableCell align="right" className={
+                      search !== "" && hourly.revenue.includes(search)
+                        ? classes.highlight
+                        : ""
+                    }>{new Intl.NumberFormat("en-ca").format(hourly.revenue)}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

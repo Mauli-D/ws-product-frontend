@@ -1,4 +1,4 @@
-import React, {useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Bar } from 'react-chartjs-2';
 import moment from 'moment';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
@@ -17,7 +17,7 @@ const StyledTableCell = withStyles((theme) => ({
   head: {
     backgroundColor: theme.palette.common.black,
     color: theme.palette.common.white,
-    fontSize:16,
+    fontSize: 16,
     fontWeight: "bold"
   },
   body: {
@@ -34,11 +34,11 @@ const StyledTableRow = withStyles((theme) => ({
 }))(TableRow);
 
 const useStyles = makeStyles({
-	root: {
-	  width: '100%',
-	},
-	container: {
-	  maxHeight: 440,
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 440,
   },
   highlight: {
     height: 16,
@@ -53,49 +53,49 @@ const DailyStats = () => {
   const impressions = dailyStats.map(daily => daily.impressions);
   const clicks = dailyStats.map(daily => daily.clicks);
   const revenue = dailyStats.map(daily => daily.revenue);
-  const impressionchart ={
+  const impressionchart = {
     labels: date,
     datasets: [
       {
-      label: 'Graph for impressions/day',
-      backgroundColor: '#71B37C',
-      borderColor: '#71B37C',
-      borderWidth: 1,
-      hoverBackgroundColor: '#71B37C',
-      hoverBorderColor: '#71B37C',
-      data: impressions
+        label: 'Graph for impressions/day',
+        backgroundColor: '#71B37C',
+        borderColor: '#71B37C',
+        borderWidth: 1,
+        hoverBackgroundColor: '#71B37C',
+        hoverBorderColor: '#71B37C',
+        data: impressions
       }
     ]
   };
-  const revenuechart ={
+  const revenuechart = {
     labels: date,
     datasets: [
       {
-      label: 'Graph for revenue/day',
-      backgroundColor: '#EC932F',
-      borderColor: '#EC932F',
-      borderWidth: 1,
-      hoverBackgroundColor: '#EC932F',
-      hoverBorderColor: '#EC932F',
-      data: revenue
+        label: 'Graph for revenue/day',
+        backgroundColor: '#EC932F',
+        borderColor: '#EC932F',
+        borderWidth: 1,
+        hoverBackgroundColor: '#EC932F',
+        hoverBorderColor: '#EC932F',
+        data: revenue
       }
     ]
   };
-  const clickchart ={
+  const clickchart = {
     labels: date,
     datasets: [
       {
-      label: 'Graph for clicks/day',
-      backgroundColor: '#FF0000',
-      borderColor: '#FF0000',
-      borderWidth: 1,
-      hoverBackgroundColor: '#FF0000',
-      hoverBorderColor: '#FF0000',
-      data: clicks
+        label: 'Graph for clicks/day',
+        backgroundColor: '#FF0000',
+        borderColor: '#FF0000',
+        borderWidth: 1,
+        hoverBackgroundColor: '#FF0000',
+        hoverBorderColor: '#FF0000',
+        data: clicks
       }
     ]
   };
-  
+
   const statschart = {
     datasets: [{
       label: 'Impressions',
@@ -107,9 +107,9 @@ const DailyStats = () => {
       hoverBackgroundColor: '#71B37C',
       hoverBorderColor: '#71B37C',
       yAxisID: 'y-axis-1'
-    },{
+    }, {
       label: 'Revenue',
-      type:'bar',
+      type: 'bar',
       data: revenue,
       fill: false,
       borderColor: '#EC932F',
@@ -119,7 +119,7 @@ const DailyStats = () => {
       pointHoverBackgroundColor: '#EC932F',
       pointHoverBorderColor: '#EC932F',
       yAxisID: 'y-axis-2'
-    },{
+    }, {
       label: 'Clicks',
       type: 'bar',
       data: clicks,
@@ -130,8 +130,9 @@ const DailyStats = () => {
       hoverBorderColor: '#FF0000',
       yAxisID: 'y-axis-3'
     }
-  ]};
-  
+    ]
+  };
+
   const options = {
     responsive: true,
     labels: date,
@@ -143,30 +144,30 @@ const DailyStats = () => {
         fill: false
       }
     },
-  scales: {
-    xAxes: [
-      {
-        display: true,
-        gridLines: {
-          display: false
-        },
-        labels: date,
-      }
-    ],
-    yAxes: [
-      {
-        type: 'linear',
-        display: true,
-        position: 'left',
-        id: 'y-axis-1',
-        gridLines: {
-          display: false
-        },
-        labels: {
-          show: true
+    scales: {
+      xAxes: [
+        {
+          display: true,
+          gridLines: {
+            display: false
+          },
+          labels: date,
         }
-      },
-      {
+      ],
+      yAxes: [
+        {
+          type: 'linear',
+          display: true,
+          position: 'left',
+          id: 'y-axis-1',
+          gridLines: {
+            display: false
+          },
+          labels: {
+            show: true
+          }
+        },
+        {
           type: 'linear',
           display: true,
           position: 'right',
@@ -177,8 +178,8 @@ const DailyStats = () => {
           labels: {
             show: true
           }
-      },
-      {
+        },
+        {
           type: 'linear',
           display: true,
           position: 'top',
@@ -206,24 +207,24 @@ const DailyStats = () => {
       }));
       setDailystats(sanitizedValue);
     }
-      getDailystats();
+    getDailystats();
   }, []);
 
   const classes = useStyles();
-	const [page, setPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
-  
+  const [page, setPage] = React.useState(0);
+  const [rowsPerPage, setRowsPerPage] = React.useState(10);
+
   const [search, setSearch] = useState("");
 
-	const handleChangePage = (event, newPage) => {
-	  setPage(newPage);
-	};
-  
-	const handleChangeRowsPerPage = (event) => {
-	  setRowsPerPage(+event.target.value);
-	  setPage(0);
+  const handleChangePage = (event, newPage) => {
+    setPage(newPage);
   };
-  
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
+
   return (
     <section id="dailystats" className="container pt-5">
       {" "}
@@ -231,13 +232,13 @@ const DailyStats = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Daily Stats</h4>
         <Bar data={statschart} options={options} />
-        <hr/>
+        <hr />
         <Bar data={impressionchart} />
-        <hr/>
+        <hr />
         <Bar data={revenuechart} />
-        <hr/>
+        <hr />
         <Bar data={clickchart} />
-        <hr/>
+        <hr />
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
         <input
@@ -248,8 +249,8 @@ const DailyStats = () => {
           aria-label="Search"
           onChange={(e) => setSearch(e.target.value)}
         />
-			</div>
-      
+      </div>
+
       <Paper className={classes.root}>
         <TableContainer component={Paper}>
           <Table className={classes.table} aria-label="simple table">
@@ -262,20 +263,20 @@ const DailyStats = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-            {filterByFields(dailyStats, ["date", "impressions", "clicks", "revenue"], search)
+              {filterByFields(dailyStats, ["date", "impressions", "clicks", "revenue"], search)
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((daily, i) => (
                   <StyledTableRow key={daily.date}>
-                    <StyledTableCell component="th" scope="row" className={search !== "" && daily.date.includes(search)? classes.highlight : ""}
+                    <StyledTableCell component="th" scope="row" className={search !== "" && daily.date.includes(search) ? classes.highlight : ""}
                     >{daily.date}</StyledTableCell>
-                  <StyledTableCell align="center" className={search !== "" && daily.impressions.includes(search)? classes.highlight : ""}>
-                    {daily.impressions}</StyledTableCell>
-                  <StyledTableCell align="center" className={search !== "" && daily.clicks.includes(search)? classes.highlight : ""}>
-                    {daily.clicks}</StyledTableCell>
-                  <StyledTableCell align="right" className={search !== "" && daily.revenue.includes(search)? classes.highlight : ""}>
-                    {new Intl.NumberFormat("en-ca").format(daily.revenue)}</StyledTableCell>
-                </StyledTableRow>
-              ))}
+                    <StyledTableCell align="center" className={search !== "" && daily.impressions.includes(search) ? classes.highlight : ""}>
+                      {daily.impressions}</StyledTableCell>
+                    <StyledTableCell align="center" className={search !== "" && daily.clicks.includes(search) ? classes.highlight : ""}>
+                      {daily.clicks}</StyledTableCell>
+                    <StyledTableCell align="right" className={search !== "" && daily.revenue.includes(search) ? classes.highlight : ""}>
+                      {new Intl.NumberFormat("en-ca").format(daily.revenue)}</StyledTableCell>
+                  </StyledTableRow>
+                ))}
             </TableBody>
           </Table>
         </TableContainer>

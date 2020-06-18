@@ -184,9 +184,9 @@ const HourlyEvents = () => {
       <div className="mb-3">
         <h4 className="text-center">Chart of Hourly Events</h4>
         <Line data={data} options={options} />
-        <hr/>
-        <Bar data={eventchart}/>
-        <hr/>
+        <hr />
+        <Bar data={eventchart} />
+        <hr />
       </div>
       <div className="col-lg-6 active-pink-4 mb-4">
         <input
